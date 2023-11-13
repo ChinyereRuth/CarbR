@@ -1,0 +1,90 @@
+---
+title: "CarbR-vignette"
+output: rmarkdown::html_vignette
+abstract: "Ensuring the reproducibility of research is a crucial aspect of scholarly endeavors. One key element in achieving reproducibility is the comprehensive documentation of the processes employed, encompassing both data processing and subsequent analyses. This vignette is tailored for the CarbR package, a valuable tool designed for generating slope and aspect maps using digital elevation models (DEM). The package also guides users through the process of DEM filling and presents a framework for conducting analyses in a reproducible manner.In addition to elucidating the steps involved in creating slope and aspect maps, this vignette underscores the significance of transparently documenting the entire analytical workflow. To enhance accessibility, the DEM utilized in the examples presented herein will be seamlessly integrated into the CarbR package."
+keywords: "R packages; slope, aspect, DEM"
+author: "Chinyere Ottah"
+date: "07 November 2023"
+vignette: >
+  %\VignetteIndexEntry{CarbR-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+## Introduction
+CarbR is a package for deriving slope and aspect using Digital Elevation Models (DEMs) in R. Slope and aspect influence fire behavior, making these variables crucial when assessing fire disturbances. From a provided digital elevation model collected from the USGS SITE: (https://search.earthdata.nasa.gov/search/granules?projectId=2435656526)  for North Western Territories (NWT) of Canada following a fire. THE carbR package was used to calculate slope and aspect.
+
+The surfaceR package provides two terrain surface outputs:
+
+- **Slope:** Indicates the steepness and inclination of a surface area.
+- **Aspect:** Describes the direction of the slope and is measured in degrees (North, East, West, and South).
+
+## Preliminaries
+After  installing the CarbR package, you need to load the pacakges used in the vignette.  You can load the package with the following commands:
+```
+library(raster)
+```
+## Loading the data
+To load the data, use the function `data()`:
+```
+data("Elevation")
+```
+
+To inspect the object, use the function `summary()`. 
+```
+summary(Elevation)
+```
+This will provide a summary estimate based on a sample of 1e+05 cells (0.77% of all cells).
+
+## Quality checks on data 
+Next, we check for missing values for the raster data. if there are missing values, We will fill the DEM. Filling a DEM when working with raster data ensures that the  ensure that the elevation data is continuous and there are no missing values. 
+
+```
+# Check if there are any NAs (missing values) in the DEM
+has_nas <- any(is.na(values(Elevation)))
+
+if (has_nas) {
+  # Fill the gaps using a simple interpolation method (linear interpolation)
+  filled_dem <- raster::interpolate(Elevation, method = "bilinear")
+} else {
+  filled_dem <- Elevation
+}
+```
+Next, we can save the filled DEM and use it to calculate slope and aspect using the slope aspect function. 
+# usethis::use_data(Elevation, overwrite = TRUE)
+
+To save the DEM, use the following command line: 
+```{r}
+# usethis::use_data(Elevation, overwrite = TRUE)
+```
+
+Next, we use the slope and aspect function from the CarbR package to calculate the aspect and slope using the saved DEM as input
+
+```{r}
+library(raster)
+data("Elevation")
+#summary(Elevation)
+library(CarbR)
+CarbR::calculate_slope_aspect(Elevation)
+```
+Next, we get the result of the function and call the result.
+```{r}
+result <- CarbR::calculate_slope_aspect(Elevation)
+slope_raster <- result$slope
+aspect_raster <- result$aspect
+```
+
+We can plot the result to see the aspect and slope 
+```{r}
+plot(slope_raster, main="Slope")
+plot(aspect_raster, main="Aspect")
+```
+
+From the result, we see the slope and aspect shown in degrees. This result is very important for carbon loss modelling, especially from fire. Steep slopes from this result  increase the spread of fire as fires tend to progress uphill because the heat and flames have already heated up the vegetation as the fire moves uphill, making it easier for them to burn and spread. For the aspect which is important for  determining the direction of the slope. South-facing slopes tend to have more sunlight, especially within the northern hemisphere, making the fuels drier and more susceptible to burning. Therefore, the CarbR package is very useful for assessing fire disturbances, including emissions and other standing and non-standing disturbances. 

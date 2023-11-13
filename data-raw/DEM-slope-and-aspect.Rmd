@@ -20,7 +20,7 @@ library(raster)
 
 ```{r}
 # Read the raster data:
-Elevation <- raster("/Users/chinyereottah/Desktop/CarbR/data-raw/NWT-2023-DEM.tif")
+Elevation <- raster("NWT-2023-DEM.tif")
 ```
 
 

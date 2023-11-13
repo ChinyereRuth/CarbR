@@ -22,6 +22,7 @@ usethis::use_data_raw()
 
 
 
+
 # Run the following function to create the documentation; the documentation goes in folder `/man`.
 devtools::document()
 #install.packages("sf")
@@ -61,10 +62,10 @@ calculate_slope_aspect <- function(dem) {
 ## example of how you can use this function
 
 # Load DEM
-elevation_raster <- raster("/Users/chinyereottah/Desktop/surfaceR/inst/extdata/NWT-2023-DEMfill.tif")
+elevation_raster <- raster("Elevation")
 
 # Calculate slope and aspect
-result <-calculate_slope_aspect(elevation_raster)
+result <-calculate_slope_aspect(Elevation)
 
 
 # Access the slope and aspect rasters
@@ -79,14 +80,13 @@ devtools::document()
 devtools::check()
 
 # This command will build the package
-install.packages("devtools")
-library(devtools)
+
 devtools::build()
+devtools::install()
 
 # Create a README file for your repository. Edit the file as appropriate AND KNIT.
 usethis::use_readme_rmd()
-#install.packages("tiff")
-#library("tiff")
+
 
 #To create a vignette for surfaceR
 usethis::use_vignette("surfaceR-vignette")

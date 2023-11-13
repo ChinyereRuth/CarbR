@@ -6,13 +6,12 @@
 \alias{CarbR-package}
 \title{CarbR: Deriving Slope and Aspect from DEM}
 \description{
-A package for deriving slope and aspect using Digital Elevation Models (DEMs) in R.
+A package for deriving slope and aspect using Digital Elevation Model (DEMs) in R.
 
-A package for deriving slope and aspect using Digital Elevation Models (DEMs) in R.
+A package for deriving slope and aspect using Digital Elevation Model (DEMs) in R.
 
-This package provides a workflow of package creation using R stidio. The package includes a function
-to derive slope and aspect using DEM and also a documented for the function.
-The DEM used for the study site is also included in the package.
+This package provides a workflow for deriving slope and aspect using R studio. The package includes a function called slope and aspect
+which can be used to derive the slope and aspect for any given region in the world. The sample DEM is also included, and documentation for the function.
 }
 \references{
 \url{https://github.com/p/ChinyereRuth/CarbR/}
