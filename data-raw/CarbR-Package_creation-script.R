@@ -89,8 +89,8 @@ usethis::use_readme_rmd()
 
 
 #To create a vignette for surfaceR
-usethis::use_vignette("surfaceR-vignette")
-usethis::use_package("surfaceR")
+usethis::use_vignette("CarbR-vignette")
+usethis::use_package("CarbR")
 browseVignettes("surfaceR")
 devtools::build_vignettes()
 devtools::check()

@@ -19,25 +19,55 @@ knitr::opts_chunk$set(
 )
 ```
 ## Introduction
-CarbR is a package for deriving slope and aspect using Digital Elevation Models (DEMs) in R. Slope and aspect influence fire behavior, making these variables crucial when assessing fire disturbances. From a provided digital elevation model collected from the USGS SITE: (https://search.earthdata.nasa.gov/search/granules?projectId=2435656526)  for North Western Territories (NWT) of Canada following a fire. THE carbR package was used to calculate slope and aspect.
+CarbR is an R package for deriving slope and aspect maps using the `calculate_slope_aspect` function. This function takes a raster object representing the Digital Elevation Model (DEM) as input and returns two rasters representing slope and aspect. The package is designed to assist in various analyses, providing a cost-free solution using R. It also facilitates easy distribution and reproducibility among researchers, teammates, and decision-makers.
+## Overview
 
-The surfaceR package provides two terrain surface outputs:
+CarbR is suitable for researchers, students, and decision-makers interested in surface analysis to understand topographic influences. This can be applied to various scenarios such as wildfire behavior, flooding, and other disturbances where slope and aspect play crucial roles.
+
+## Sample Data
+
+The sample data included in this package was collected from the North Western Territory (NWT) in Canada for the year 2023. You can download the sample data from [GitHub](https://github.com/ChinyereRuth/CarbR) or directly from the [USGS webpage](https://search.earthdata.nasa.gov/search/granules?projectId=2435656526).
+
+
+## CarbR Function: Aspect and Slope
+
+The `calculate_slope_aspect` function in CarbR is used to create aspect and slope maps. Given a raster DEM as input, the function returns rasters for slope and aspect in degrees. Slope indicates the steepness and inclination of a surface, while aspect describes the direction of the slope (North, East, West, South).
+
+Not only does the function enable the fast generation of aspect and slope maps, but it also facilitates the derivation of new maps for various analyses.
+
+The CarbR package provides two terrain surface outputs:
 
 - **Slope:** Indicates the steepness and inclination of a surface area.
 - **Aspect:** Describes the direction of the slope and is measured in degrees (North, East, West, and South).
 
-## Preliminaries
-After  installing the CarbR package, you need to load the pacakges used in the vignette.  You can load the package with the following commands:
+## Example Usage
+
+Here are concrete examples of using the `calculate_slope_aspect` function in CarbR:
+
+### Preliminaries
+
+Ensure that R and RStudio are installed. Install the CarbR package from GitHub:
+
+
+# install.packages("remotes")
+# remotes::install_github("ChinyereRuth/CarbR")
+
+Also, install and load the required raster package:
+
 ```
 library(raster)
 ```
-## Loading the data
+## Workflow for this package
+
+Firstly, we have to load the elevation data 
+
 To load the data, use the function `data()`:
 ```
 data("Elevation")
 ```
 
 To inspect the object, use the function `summary()`. 
+
 ```
 summary(Elevation)
 ```
@@ -87,4 +117,5 @@ plot(slope_raster, main="Slope")
 plot(aspect_raster, main="Aspect")
 ```
 
+## Conlusion
 From the result, we see the slope and aspect shown in degrees. This result is very important for carbon loss modelling, especially from fire. Steep slopes from this result  increase the spread of fire as fires tend to progress uphill because the heat and flames have already heated up the vegetation as the fire moves uphill, making it easier for them to burn and spread. For the aspect which is important for  determining the direction of the slope. South-facing slopes tend to have more sunlight, especially within the northern hemisphere, making the fuels drier and more susceptible to burning. Therefore, the CarbR package is very useful for assessing fire disturbances, including emissions and other standing and non-standing disturbances. 
